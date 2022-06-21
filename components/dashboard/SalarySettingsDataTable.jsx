@@ -1,7 +1,5 @@
 import {  useState } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
-import Jsona from 'jsona'
 import DataTable from './DataTable'
 import { columns } from '../../data/salarySettingsTableData'
 import { TableContainer } from '../modalComponents'
@@ -11,20 +9,17 @@ import SalarySettingForm from '../salarySettingForm'
 import { fetchSalarySettings } from '../../redux/actions/dashboardActions'
 import {createNewSalarySetting, remoteUpdateSalarySetting} from '../../redux/actions/salarySettingActions'
 
-function SalariesDataTable({
-  salarySettings,
-  setSalarySettings,
+const SalariesDataTable = ({
   fetchSalarySettings,
   createNewSalarySetting,
   remoteUpdateSalarySetting
-}) {
+}) => {
   const [salarySetting, setSalarySetting] = useState({})
   const [createNew, setCreateNew] = useState(false)
   const [errors, setErrors] = useState({})
   const [taxRules, setTaxRules] = useState([])
   const [updatingSalarySetting, setUpdatingSalarySetting] = useState(false)
 
-  const dataFormatter = new Jsona()
   const creatingNew = () => setCreateNew(true)
   const numberRegEx = /^\d+.?\d*$/
 

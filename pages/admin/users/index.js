@@ -4,8 +4,7 @@ import Navbar from '../../../components/layout/Navbar'
 import UsersDataTable from '../../../components/dashboard/UsersDataTable'
 import { fetchUsers } from '../../../redux/actions/usersActions'
 
-function Users(props) {
-
+const Users = (props) => {
   useEffect(() => {
     if (props.token) {
       props.fetchUsers()

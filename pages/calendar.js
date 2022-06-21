@@ -9,22 +9,23 @@ import Jsona from 'jsona'
 import Modal from '../components/modal'
 import {Input, Label, Select, Option, Btn} from '../components/formComponents'
 import LeaveBalanceBadge from '../components/leaveBalanceBadge'
-import { isAdmin, colorMap, fullCalendarEndDate } from '../lib/utils'
+import {isAdmin, colorMap, fullCalendarEndDate} from '../lib/utils'
 import Navbar from '../components/layout/Navbar'
 import {addLeaveRequest, setSelectedLeave, updateLeaveRequest} from "../redux/actions/leaveActions";
 import {setNewModal, setUpdateModal} from "../redux/actions/modalActions";
 
-function Calendar({
+const Calendar = ({
                     user,
                     leave_request,
                     newModal,
                     updateModal,
+                    token,
                     setSelectedLeave,
                     addLeaveRequest,
                     updateLeaveRequest,
                     setNewModal,
                     setUpdateModal
-                  }) {
+                  }) => {
   const [error, setError] = useState('')
 
   const dataFormatter = new Jsona()
@@ -53,12 +54,12 @@ function Calendar({
     setError('')
 
     //  first get id of leave request with
-    const { id } = event
+    const {id} = event
 
     // make request to remote API to get leave request detail
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_REMOTE_URL}/api/v1/leave_requests/${id}`,
-      {headers: {Authorization: localStorage.token}},
+      {headers: {Authorization: token}},
     )
 
     setSelectedLeave(dataFormatter.deserialize(response.data))
@@ -85,7 +86,7 @@ function Calendar({
               `${process.env.NEXT_PUBLIC_REMOTE_URL}/api/v1/leave_requests.json`,
               {
                 params: {start, end, all_leaves: true},
-                headers: {Authorization: localStorage.token},
+                headers: {Authorization: token},
               },
             )
 
@@ -114,7 +115,7 @@ function Calendar({
           <div>
             <div className="flex justify-between">
               <LeaveBalanceBadge
-                label='Sick Leave Balance' k
+                label='Sick Leave Balance'
                 balance={user.sick_leave_balance || 0}
               />
               <LeaveBalanceBadge
@@ -274,6 +275,7 @@ const mapStateToProps = (state) => ({
   leave_request: state.leave.selectedLeave,
   newModal: state.modal.newModal,
   updateModal: state.modal.updateModal,
+  token: state.auth.token
 })
 export default connect(mapStateToProps, {
   setSelectedLeave,

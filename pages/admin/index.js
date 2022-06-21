@@ -6,9 +6,7 @@ import { Btn } from '../../components/formComponents'
 import Loader from '../../components/ui/loader'
 import { useEffect } from 'react'
 
-function Admin({ user, loading }) {
-  useEffect(() => console.log(loading), [loading])
-
+const Admin = ({ user, loading }) => {
   const adminPages = [
     {
       topic: 'User',

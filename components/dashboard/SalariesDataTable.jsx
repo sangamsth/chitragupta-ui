@@ -9,7 +9,7 @@ import InputWithLabelAndError from '../InputWithLabelAndError'
 import { fetchSalaries } from '../../redux/actions/dashboardActions'
 import { createSalary } from '../../redux/actions/salaryActions'
 
-function SalariesDataTable({ fetchSalaries, createSalary }) {
+const SalariesDataTable = ({ fetchSalaries, createSalary }) => {
   const [salary, setSalary] = useState({})
   const [createNewSalary, setCreateNewSalary] = useState(false)
   const [errors, setErrors] = useState({})

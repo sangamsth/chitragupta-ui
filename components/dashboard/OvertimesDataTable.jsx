@@ -14,13 +14,13 @@ import InputWithLabelAndError from '../InputWithLabelAndError'
 import { TableContainer } from '../modalComponents'
 import { searchRequest, fetchUsers } from "../../lib/queries";
 
-function OvertimesDataTable({
+const OvertimesDataTable = ({
   fetchOvertimes,
   createOvertime,
   setShowModal,
   approver,
   showModal,
-}) {
+}) => {
   const isAdmin = () => approver && approver.role === 'admin'
   const numberRegEx = /^\d*$/
 

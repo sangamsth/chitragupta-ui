@@ -1,15 +1,13 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import { columns } from '../../data/salaryRecordsTableData'
 import { TableContainer } from '../modalComponents'
 import { Btn, Input } from '../formComponents'
 import DataTable from './DataTable'
-import Alert from '../alert'
 import { fetchSalaryRecords } from '../../redux/actions/dashboardActions'
 import {generateSalaryRecords} from "../../redux/actions/salaryRecordActions";
 
-function SalaryRecordsDataTable({ fetchSalaryRecords, generateSalaryRecords }) {
+const SalaryRecordsDataTable = ({ fetchSalaryRecords, generateSalaryRecords }) => {
   const [date, setDate] = useState(null)
 
   // make request to remote api for salary records generation
