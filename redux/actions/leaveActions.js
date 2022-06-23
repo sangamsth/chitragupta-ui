@@ -10,7 +10,7 @@ import {
 } from './types'
 import { returnErrors, returnAlerts, clearErrors } from './alertActions'
 import { tokenConfig } from './authActions'
-import {setUpdateModal} from "./modalActions";
+import {setNewModal, setUpdateModal} from "./modalActions";
 
 const dataFormatter = new Jsona()
 
@@ -36,7 +36,7 @@ export const addLeaveRequest = () => (dispatch, getState) => {
       tokenConfig(getState),
     )
     .then((res) => {
-      dispatch(setLeaveModal(false))
+      dispatch(setNewModal(false))
       dispatch(
         returnAlerts(
           'Leave Request Added Successfully',
