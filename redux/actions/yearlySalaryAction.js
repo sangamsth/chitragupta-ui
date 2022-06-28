@@ -3,7 +3,7 @@ import { returnErrors, returnAlerts } from './alertActions'
 
 export const generateYearlySalary = (fiscal_year) => async (dispatch, getState) => {
   if (!fiscal_year) {
-    dispatch(returnErrors('Date must be present.', 422, 'INVALID_ARGUMENT'))
+    dispatch(returnErrors('Fiscal Year must be present.', 422, 'INVALID_ARGUMENT'))
   } else {
     try {
       const response = await axios.post(

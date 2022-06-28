@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import { columns } from '../../data/yearlySalaryTableData'
 import { TableContainer } from '../modalComponents'
 import { Btn, Input } from '../formComponents'
 import DataTable from './DataTable'
-import Alert from '../alert'
 import { fetchYearlySalary } from '../../redux/actions/dashboardActions'
 import { generateYearlySalary } from '../../redux/actions/yearlySalaryAction'
+import React from 'react'
 
-function YearlySalaryDataTable({ fetchYearlySalary, generateYearlySalary }) {
+
+const YearlySalaryDataTable = ({ fetchYearlySalary, generateYearlySalary }) => {
   const [fiscal_year, setFiscalYear] = useState(null)
 
   // make request to remote api for salary records generation
@@ -28,7 +28,12 @@ function YearlySalaryDataTable({ fetchYearlySalary, generateYearlySalary }) {
         />
         <Btn
           className="bg-teal-500 hover:bg-teal-600"
-          onClick={fillSalaryRecords}
+          onClick={function () {
+            fillSalaryRecords()
+              { setTimeout(function () {
+                window.location.reload()
+              }, 7000)}
+          }}
         >
           Generate
         </Btn>
@@ -37,6 +42,8 @@ function YearlySalaryDataTable({ fetchYearlySalary, generateYearlySalary }) {
       <DataTable columns={columns} fetchFunction={fetchYearlySalary} />
     </TableContainer>
   )
+
+
 }
 
 export default connect(() => ({}), {
