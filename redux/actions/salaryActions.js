@@ -26,3 +26,35 @@ export const createSalary = (salary) => async (dispatch, getState) => {
     )
   }
 }
+
+export const uploadSalaryCSV = (formData) => async(dispatch, getState) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_REMOTE_URL}/api/v1/bulk_upload_salaries.json`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: getState().auth.token,
+        },
+      },
+    )
+
+    if (response.statusText === 'OK') {
+      dispatch(returnAlerts(
+        response.data.message,
+        response.status
+      ))
+    } else {
+      dispatch(returnErrors(
+        response.data.message,
+        response.status
+      ))
+    }
+  } catch(error) {
+    dispatch(returnErrors(
+      error.response && error.response.data,
+      error.response && error.response.status
+    ))
+  }
+}
