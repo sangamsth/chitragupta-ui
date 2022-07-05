@@ -14,6 +14,7 @@ const RouteGuard = (props) => {
       '/admin/salarySettings',
       '/admin/salaryRecords',
       '/admin/YearlySalary',
+      '/admin/secretSantaSeason',
       '/users/invite_form',
     ]
 

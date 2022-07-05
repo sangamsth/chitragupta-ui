@@ -43,6 +43,11 @@ const Admin = ({ user, loading }) => {
       description: 'Generate new yearly salary records',
       link: '/admin/YearlySalary',
     },
+    {
+      topic: 'Secret Santa Season',
+      description: 'Generate new secret santa season',
+      link: '/admin/secretSantaSeason',
+    },
   ]
 
   return user && !loading && user.role === 'admin' ? (
