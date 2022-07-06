@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import DataTable from './DataTable'
 import { columns } from '../../data/secretSantaTableData'
 import { TableContainer } from '../modalComponents'
@@ -8,7 +8,9 @@ import Modal from '../modal'
 import InputWithLabelAndError from '../InputWithLabelAndError'
 import { fetchSecretSantaSeason } from '../../redux/actions/dashboardActions'
 import { createSecretSantaSeason } from '../../redux/actions/secretSantaSeasonAction'
-
+import { searchRequest, fetchUsers } from '../../lib/queries'
+import AsyncSelect from 'react-select/async'
+import Select from 'react-select'
 
 const SecretSantaDataTable = ({
   fetchSecretSantaSeason,
@@ -16,20 +18,21 @@ const SecretSantaDataTable = ({
 }) => {
   const [season, setSeason] = useState({})
   const [createNewSeason, setCreateNewSeason] = useState(false)
+  const [userOptions, setUserOptions] = useState([])
 
   const [errors, setErrors] = useState({})
 
   const creatingNewSeason = () => setCreateNewSeason(true)
   const validRegEx = /^[\w ]*$/
 
+  useEffect(() => {
+    const setOptions = async () => {
+      const users = await fetchUsers()
+      setUserOptions(users)
+    }
 
-
-  const updateSeason = (e) => {
-    delete errors[e.target.name]
-    if (!e.target.value.match(validRegEx))
-      setErrors({ ...errors, [e.target.name]: 'invalid type.' })
-    setSeason({ ...season, [e.target.name]: e.target.value })
-  }
+    setOptions()
+  }, [])
 
   //this is required because if we submit empty form we are getting error but status is stil 200:OK
   const checkIfFormIsValid = () => {
@@ -54,6 +57,12 @@ const SecretSantaDataTable = ({
     }
   }
 
+  const options = [
+    { value: 'active', label: 'Active' },
+    { value: 'frozen', label: 'Frozen' },
+    { value: 'archived', label: 'Archived' },
+  ]
+
   return (
     <>
       <TableContainer>
@@ -75,14 +84,44 @@ const SecretSantaDataTable = ({
           title="Create New Season"
         >
           <div className="flex flex-wrap">
-            {['title', 'year', 'remarks', 'status', 'manager_id'].map((field) => (
+            {['title', 'year', 'remarks'].map((field) => (
               <InputWithLabelAndError
                 name={field}
-                onChange={updateSeason}
+                onChange={(e) => {
+                  setSeason({ ...season, [e.target.name]: e.target.value })
+                }}
                 value={season[field]}
                 errors={errors}
               />
             ))}
+            {/* <Select
+              value={season}
+              onChange={(e) => {
+                setSeason({ ...season, status: e.target.value })
+              }}
+            >
+              <Option value="active">active</Option>
+              <Option value="archived">archived</Option>
+              <Option value="frozen">frozen</Option>
+            </Select> */}
+            <Select
+              placeholder={<p>Select Status</p>}
+              defaultValue="sss"
+              className="w-40"
+              onChange={(e) => {
+                setSeason({ ...season, status: e.value })
+              }}
+              options={options}
+            />
+            <AsyncSelect
+              placeholder="Select Manager"
+              name="manager_id"
+              onChange={(e) => {
+                setSeason({ ...season, manager_id: e.value })
+              }}
+              defaultOptions={userOptions}
+              loadOptions={(query) => searchRequest(query)}
+            />
           </div>
 
           <Btn
