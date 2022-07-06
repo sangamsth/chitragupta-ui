@@ -1,15 +1,13 @@
 import { connect } from 'react-redux'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import DataTable from './DataTable'
 import { columns } from '../../data/secretSantaTableData'
 import { TableContainer } from '../modalComponents'
-import { Btn, Label } from '../formComponents'
-import AsyncSelect from 'react-select/async'
+import { Btn } from '../formComponents'
 import Modal from '../modal'
 import InputWithLabelAndError from '../InputWithLabelAndError'
 import { fetchSecretSantaSeason } from '../../redux/actions/dashboardActions'
 import { createSecretSantaSeason } from '../../redux/actions/secretSantaSeasonAction'
-import { searchRequest, fetchUsers } from '../../lib/queries'
 
 
 const SecretSantaDataTable = ({
@@ -18,21 +16,13 @@ const SecretSantaDataTable = ({
 }) => {
   const [season, setSeason] = useState({})
   const [createNewSeason, setCreateNewSeason] = useState(false)
-  const [userOptions, setUserOptions] = useState([])
 
   const [errors, setErrors] = useState({})
 
   const creatingNewSeason = () => setCreateNewSeason(true)
   const validRegEx = /^[\w ]*$/
 
-  useEffect(() => {
-    const setOptions = async () => {
-      const users = await fetchUsers()
-      setUserOptions(users)
-    }
 
-    setOptions()
-  }, [])
 
   const updateSeason = (e) => {
     delete errors[e.target.name]
@@ -85,7 +75,7 @@ const SecretSantaDataTable = ({
           title="Create New Season"
         >
           <div className="flex flex-wrap">
-            {['title', 'year', 'remarks', 'status'].map((field) => (
+            {['title', 'year', 'remarks', 'status', 'manager_id'].map((field) => (
               <InputWithLabelAndError
                 name={field}
                 onChange={updateSeason}
@@ -94,16 +84,6 @@ const SecretSantaDataTable = ({
               />
             ))}
           </div>
-          <AsyncSelect
-            placeholder="Select Manager"
-            onChange={(e) => {
-              updateSeason({ ...season, user_id: e.value })
-            }}
-            defaultOptions={userOptions}
-            loadOptions={(query) => searchRequest(query)}
-          />
-
-
 
           <Btn
             className="bg-teal-500 hover:bg-teal-600"
