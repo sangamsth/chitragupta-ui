@@ -104,9 +104,10 @@ const SecretSantaDataTable = ({
               <Option value="archived">archived</Option>
               <Option value="frozen">frozen</Option>
             </Select> */}
+          </div>
+          <div className="flex flex-wrap">
             <Select
               placeholder={<p>Select Status</p>}
-              defaultValue="sss"
               className="w-40"
               onChange={(e) => {
                 setSeason({ ...season, status: e.value })
@@ -115,6 +116,7 @@ const SecretSantaDataTable = ({
             />
             <AsyncSelect
               placeholder="Select Manager"
+              className="w-48"
               name="manager_id"
               onChange={(e) => {
                 setSeason({ ...season, manager_id: e.value })

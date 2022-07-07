@@ -4,7 +4,6 @@ export const columns = [
     accessor: 'Username',
     id: 'username',
     Cell: ({ row }) => {
-      console.log(row)
       const { user } = row.original
       return `${user.first_name} ${user.last_name}`
     },
