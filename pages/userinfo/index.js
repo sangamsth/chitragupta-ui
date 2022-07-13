@@ -6,23 +6,23 @@ import { Btn } from '../../components/formComponents'
 import Loader from '../../components/ui/loader'
 
 const User = ({ user, loading }) => {
-  const userPages = [
-    {
-      topic: 'Overtimes',
-      description: 'View and manage overtimes',
-      link: '/admin/overtimes',
-    },
-    {
-      topic: 'Invite User',
-      description: 'Invite new users to the organization',
-      link: '/users/invite_form',
-    },
-    {
-      topic: 'Devices',
-      description: 'View Devices being used and managed',
-      link: '#',
-    },
-  ]
+    const userPages = [
+      {
+        topic: 'Overtimes',
+        description: 'View and manage overtimes',
+        link: '/admin/overtimes',
+      },
+      {
+        topic: 'Invite User',
+        description: 'Invite new users to the organization',
+        link: '/users/invite_form',
+      },
+      {
+        topic: 'Devices',
+        description: 'View Devices being used and managed',
+        link: '#',
+      },
+    ]
 
   return user && !loading && user.role === 'user' ? (
     <>
